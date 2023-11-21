@@ -1,3 +1,14 @@
+const state = {
+    view:{
+        gameTimeView: document.querySelector("#time"),
+        move: document.querySelector("#Score"),
+    },
+    values:{
+        gameTime: 0,
+        startGame: 0,
+    }
+}
+
 const emojis = [
     "🐶",
     "🐶",
@@ -18,6 +29,7 @@ const emojis = [
 ];
 let openCards = [];
 
+
 //embaralhador de do emojis
 let randomEmojis = emojis.sort(() => (Math.random() > 0.5 ? 2 : -1));
 
@@ -37,6 +49,11 @@ function checkMatch(){
     }
 }
 
+function contDown() {
+    state.values.gameTime++
+    state.view.gameTimeView.textContent = state.values.gameTime;
+}
+
 //clicar em um carde
 function handleClick(){
     if(openCards.length <2){
@@ -44,7 +61,12 @@ function handleClick(){
         openCards.push(this);
     }
     if(openCards.length == 2){
-        setTimeout(checkMatch, 500); 
+        setTimeout(checkMatch, 500);
+        state.values.startGame++;
+        state.view.move.textContent = state.values.startGame;
+    }
+    if( state.values.startGame == 0 && openCards.length == 1){
+        setInterval(contDown, 1000);
     }
 }
 
